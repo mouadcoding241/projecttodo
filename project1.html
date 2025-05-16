@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activity Tracker</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      background-image: url('https://static.vecteezy.com/system/resources/previews/008/023/852/non_2x/abstract-colorful-geometric-shape-background-modern-color-background-for-your-website-vector.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+    }
+    #form-fieldset {
+      background-color: rgba(92, 23, 122, 0.71); /* Solid color for the form */
+      border: 2px solid #dee2e6; /* Bootstrap's default border color */
+      color :white;
+    
+    }
+
+    .page-title {
+      color: #333;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    .nav-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body class="d-flex justify-content-center align-items-center">
+  <a href="activities.html" class="btn btn-primary nav-button">View Activities</a>
+
+  <fieldset class="border p-4 rounded" style="width: 100%; max-width: 500px;" id="form-fieldset">
+    <h1 class="page-title text-center"style="color:white">Activity Tracker</h1>
+    
+    <form id="activityForm">
+      <div class="mb-3">
+        <input type="text" class="form-control" id="activityName" placeholder="Activity Name" required>
+      </div>
+      
+      <div class="mb-3">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="important">
+          <label class="form-check-label" for="important">Important</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="urgent">
+          <label class="form-check-label" for="urgent">Urgent</label>
+        </div>
+      </div>
+      
+      <button type="submit" class="btn btn-primary w-100">Submit</button>
+    </form>
+  </fieldset>
+
+ <script>
+    document.getElementById('activityForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const activity = {
+        name: document.getElementById('activityName').value,
+        important: document.getElementById('important').checked,
+        urgent: document.getElementById('urgent').checked,
+        timestamp: new Date().toISOString()
+      };
+      
+      // Get existing activities or create new array
+      let activities = JSON.parse(localStorage.getItem('activities')) || [];
+      
+      // Add new activity
+      activities.push(activity);
+      
+      // Save back to localStorage
+      localStorage.setItem('activities', JSON.stringify(activities));
+      
+      // Reset form
+      this.reset();
+      alert('Activity saved successfully!');
+    });
+  </script>
+</body>
+</html>
